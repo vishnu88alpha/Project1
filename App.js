@@ -1,60 +1,47 @@
-// App.js or your navigation setup file
-import React, { useEffect, useState} from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'expo-status-bar';
+import { createStackNavigator } from '@react-navigation/stack';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import LoadingScreen from './Screens/LoadingScreen';
-import LoginScreen from './Components/LoginScreen';
+//Common Stack Screen
+import CommonStackScreen from './Components/CommonStackScreen'; // Import your CommonStackScreen component
+
+//Faculty Screens
 import FacultyHome from './Faculty/FacultyHome';
+import AttendanceMkScreen from './Faculty/AttendanceMkScreen';
+import AssignmentsScreen from './Faculty/AssignmentsScreen';
+import AnnouncementScreen from './Faculty/AnnouncementScreen';
+import ConductingQuizScreen from './Faculty/ConductingQuizScreen';
+import GradingScreen from './Faculty/GradingScreen';
+import FacultyProfileScreen from './Faculty/FacultyProfileScreen';
+import EventUploadScreen from './Faculty/EventUploadScreen';
+
+//Student Screens
+import HomeScreen from './Screens/HomeScreen';
 import EventsScreen from './Screens/EventsScreen';
 import AttendanceScreen from './Screens/AttendanceScreen';
 import ResultsScreen from './Screens/ResultsScreen';
 import LibraryScreen from './Screens/LibraryScreen';
 import SettingsScreen from './Screens/SettingsScreen';
 import ProfileScreen from './Screens/ProfileScreen';
-import AttendanceMkScreen from './Faculty/AttendanceMkScreen';
-import AssignmentsScreen from './Faculty/AssignmentsScreen';
 import Assignment from './Screens/Assignment';
+import StudentAnnouncementsScreen from './Screens/StudentAnnouncementsScreen';
 import PostedAssignments from './Screens/PostedAssignments';
 import TimeTableScreen from './Screens/TimeTableScreen';
-import AnnouncementsScreen from './Screens/AnnouncementsScreen';
+import QuizScreen from './Screens/QuizScreen';
 import TrialScreen from './Screens/TrialScreen';
-import AnnouncementScreen from './Faculty/AnnouncementScreen';
-import ConductingQuizScreen from './Faculty/ConductingQuizScreen';
-import GradingScreen from './Faculty/GradingScreen';
-import FacultyProfileScreen from './Faculty/FacultyProfileScreen';
-import HomeScreen from './Screens/HomeScreen';
-
-import { firebase } from './FirebaseConfig';
+import DevelopScreen from './Screens/DevelopScreen';
+import TestScreen from './Screens/NotificatonScreen';
 
 
-const Stack = createNativeStackNavigator();
 
-function InsideLayout() {
-  return (
-      <Stack.Navigator initialRouteName="Loading">
-        <Stack.Screen
-          name="Loading"
-          component={LoadingScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="LoginScreen"
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{
-            title: 'Student Home',
-            headerStyle: {
-              backgroundColor: 'gold', // Set the background color for the header
-            },
-            headerTintColor: 'black', // Set the text color for the header
-          }}
-        />
+
+
+
+const Stack = createStackNavigator();
+
+const FacultyStackScreen = () => (
+  <Stack.Navigator>
         <Stack.Screen
           name="FacultyHome"
           component={FacultyHome}
@@ -66,6 +53,119 @@ function InsideLayout() {
             headerTintColor: 'black', // Set the text color for the header
           }}
         />
+      <Stack.Screen
+        name="AttendanceMkScreen"
+        component={AttendanceMkScreen}
+        options={{
+          title: 'Attendance Marking',
+          headerStyle: {
+            backgroundColor: 'gold', // Set the background color for the header
+          },
+          headerTintColor: 'black', // Set the text color for the header
+        }}
+      />
+      <Stack.Screen
+        name="AssignmentsScreen"
+        component={AssignmentsScreen}
+        options={{
+          title: 'Assignment',
+          headerStyle: {
+            backgroundColor: 'gold', // Set the background color for the header
+          },
+          headerTintColor: 'black', // Set the text color for the header
+        }}
+      />
+      <Stack.Screen
+        name="AnnouncementScreen"
+        component={AnnouncementScreen}
+        options={{
+          title: 'AnnouncementScreen',
+          headerStyle: {
+            backgroundColor: 'gold', // Set the background color for the header
+          },
+          headerTintColor: 'black', // Set the text color for the header
+        }}
+      />
+      <Stack.Screen
+        name="ConductingQuizScreen"
+        component={ConductingQuizScreen}
+        options={{
+          title: 'Quiz',
+          headerStyle: {
+            backgroundColor: 'gold', // Set the background color for the header
+          },
+          headerTintColor: 'black', // Set the text color for the header
+        }}
+      />
+      <Stack.Screen
+        name="GradingScreen"
+        component={GradingScreen}
+        options={{
+          title: 'Grade',
+          headerStyle: {
+            backgroundColor: 'gold', // Set the background color for the header
+          },
+          headerTintColor: 'black', // Set the text color for the header
+          
+        }}
+      />
+      <Stack.Screen
+        name="FacultyProfileScreen"
+        component={FacultyProfileScreen}
+        options={{
+          title: 'Profile',
+          headerStyle: {
+            backgroundColor: 'gold', // Set the background color for the header
+          },
+          headerTintColor: 'black', // Set the text color for the header
+        }}
+      />
+      <Stack.Screen
+        name="EventUploadScreen"
+        component={EventUploadScreen} // Add EventUploadScreen as a component
+        options={{
+          title: 'Upload Event',
+          headerStyle: {
+            backgroundColor: 'gold', // Set the background color for the header
+          },
+          headerTintColor: 'black', // Set the text color for the header
+        }}
+      />
+  </Stack.Navigator>
+);
+
+const StudentStackScreen = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="HomeScreen"
+      component={HomeScreen}
+      options={({ navigation }) => ({
+        title: 'HOME',
+        headerStyle: {
+          backgroundColor: 'gold',
+        },
+        headerTintColor: 'black',
+        headerLeft: () => (
+          <Icon
+            name="user-circle"
+            size={22}
+            color="black"
+            style={{ marginLeft: 15 }}
+            onPress={() => navigation.navigate('ProfileScreen')}
+          />
+        ),
+        headerRight: () => (
+          <Icon
+            name="bell"
+            size={22}
+            color="black"
+            style={{ marginRight: 15 }}
+            onPress={() => navigation.navigate('TestScreen')}
+          />
+        ),
+      })}
+    />
+        
         <Stack.Screen
           name="EventsScreen"
           component={EventsScreen}
@@ -132,188 +232,107 @@ function InsideLayout() {
             headerTintColor: 'black', // Set the text color for the header
           }}
         />
-<Stack.Screen
-  name="AttendanceMkScreen"
-  component={AttendanceMkScreen}
-  options={{
-    title: 'Attendance Marking',
-    headerStyle: {
-      backgroundColor: 'gold', // Set the background color for the header
-    },
-    headerTintColor: 'black', // Set the text color for the header
-  }}
-/>
-<Stack.Screen
-  name="AssignmentsScreen"
-  component={AssignmentsScreen}
-  options={{
-    title: 'Assignment',
-    headerStyle: {
-      backgroundColor: 'gold', // Set the background color for the header
-    },
-    headerTintColor: 'black', // Set the text color for the header
-  }}
-/>
-<Stack.Screen
-  name="Assignment"
-  component={Assignment}
-  options={{
-    title: 'Assignment',
-    headerStyle: {
-      backgroundColor: 'gold', // Set the background color for the header
-    },
-    headerTintColor: 'black', // Set the text color for the header
-  }}
-/>
-<Stack.Screen
-  name="TimeTableScreen"
-  component={TimeTableScreen}
-  options={{
-    title: 'TimeTable',
-    headerStyle: {
-      backgroundColor: 'gold', // Set the background color for the header
-    },
-    headerTintColor: 'black', // Set the text color for the header
-  }}
-/>
-<Stack.Screen
-  name="TrialScreen"
-  component={TrialScreen}
-  options={{
-    title: 'Trial',
-    headerStyle: {
-      backgroundColor: 'gold', // Set the background color for the header
-    },
-    headerTintColor: 'black', // Set the text color for the header
-  }}
-/>
-<Stack.Screen
-  name="AnnouncementScreen"
-  component={AnnouncementScreen}
-  options={{
-    title: 'AnnouncementScreen',
-    headerStyle: {
-      backgroundColor: 'gold', // Set the background color for the header
-    },
-    headerTintColor: 'black', // Set the text color for the header
-  }}
-/>
+        <Stack.Screen
+          name="Assignment"
+          component={Assignment}
+          options={{
+            title: 'Assignment',
+            headerStyle: {
+              backgroundColor: 'gold', // Set the background color for the header
+            },
+            headerTintColor: 'black', // Set the text color for the header
+          }}
+        />
+        <Stack.Screen
+          name="TimeTableScreen"
+          component={TimeTableScreen}
+          options={{
+            title: 'TimeTable',
+            headerStyle: {
+              backgroundColor: 'gold', // Set the background color for the header
+            },
+            headerTintColor: 'black', // Set the text color for the header
+          }}
+        />
+        <Stack.Screen
+          name="QuizScreen"
+          component={QuizScreen}
+          options={{
+            title: 'Quiz',
+            headerStyle: {
+              backgroundColor: 'gold', // Set the background color for the header
+            },
+            headerTintColor: 'black', // Set the text color for the header
+          }}
+        />
+        <Stack.Screen
+          name="TrialScreen"
+          component={TrialScreen}
+          options={{
+            title: 'Trial',
+            headerStyle: {
+              backgroundColor: 'gold', // Set the background color for the header
+            },
+            headerTintColor: 'black', // Set the text color for the header
+          }}
+        />
+        <Stack.Screen
+          name="DevelopScreen"
+          component={DevelopScreen}
+          options={{
+            title: 'Develop',
+            headerStyle: {
+              backgroundColor: 'gold', // Set the background color for the header
+            },
+            headerTintColor: 'black', // Set the text color for the header
+          }}
+        />
+        <Stack.Screen
+          name="TestScreen"
+          component={TestScreen}
+          options={{
+            title: 'Notifications',
+            headerStyle: {
+              backgroundColor: 'gold', // Set the background color for the header
+            },
+            headerTintColor: 'black', // Set the text color for the header
+          }}
+        />
+        <Stack.Screen
+          name="StudentAnnouncementsScreen"
+          component={StudentAnnouncementsScreen}
+          options={{
+            title: 'StudentAnnouncementsScreen',
+            headerStyle: {
+              backgroundColor: 'gold', // Set the background color for the header
+            },
+            headerTintColor: 'black', // Set the text color for the header
+          }}
+        />
+        <Stack.Screen
+          name="PostedAssignments"
+          component={PostedAssignments}
+          options={{
+            title: 'PostedAssignments',
+            headerStyle: {
+              backgroundColor: 'gold', // Set the background color for the header
+            },
+            headerTintColor: 'black', // Set the text color for the header
+          }}
+        />
+  </Stack.Navigator>
+);
 
-<Stack.Screen
-  name="AnnouncementsScreen"
-  component={AnnouncementsScreen}
-  options={{
-    title: 'Announcements',
-    headerStyle: {
-      backgroundColor: 'gold', // Set the background color for the header
-    },
-    headerTintColor: 'black', // Set the text color for the header
-  }}
-/>
-<Stack.Screen
-  name="ConductingQuizScreen"
-  component={ConductingQuizScreen}
-  options={{
-    title: 'Quiz',
-    headerStyle: {
-      backgroundColor: 'gold', // Set the background color for the header
-    },
-    headerTintColor: 'black', // Set the text color for the header
-  }}
-/>
-<Stack.Screen
-  name="GradingScreen"
-  component={GradingScreen}
-  options={{
-    title: 'Grade',
-    headerStyle: {
-      backgroundColor: 'gold', // Set the background color for the header
-    },
-    headerTintColor: 'black', // Set the text color for the header
-    
-  }}
-/>
-<Stack.Screen
-  name="PostedAssignments"
-  component={PostedAssignments}
-  options={{
-    title: 'PostedAssignments',
-    headerStyle: {
-      backgroundColor: 'gold', // Set the background color for the header
-    },
-    headerTintColor: 'black', // Set the text color for the header
-  }}
-/>
-<Stack.Screen
-  name="FacultyProfileScreen"
-  component={FacultyProfileScreen}
-  options={{
-    title: 'Profile',
-    headerStyle: {
-      backgroundColor: 'gold', // Set the background color for the header
-    },
-    headerTintColor: 'black', // Set the text color for the header
-  }}
-/>
-      </Stack.Navigator>
-  )
-}
-
-export default function App() {
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
-  const [role, setRole] = useState(); // State for user role
-
-  useEffect(() => {
-      const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
-      return subscriber;
-    }, []);
-   // Empty dependency array to ensure the effect runs once on mount
-
-  function onAuthStateChanged(user) {
-    setUser(user);
-    if (initializing) setInitializing(false);
-
-    if (user) {
-      // User is signed in.
-      console.log("User signed in:", user.email);
-      
-      // Fetch additional user information from Firestore
-      firebase.firestore().collection("users").where("email", "==", user.email).get().then(snapshot => {
-        if (!snapshot.empty) {
-          const userData = snapshot.docs[0].data();
-          console.log("User data:", userData);
-          const userRole = userData.role;
-          if (!userRole) {
-            // User role not found, stay in login screen
-            alert("User role not found. Please contact support.");
-            firebase.auth().signOut(); // Sign out user
-          } else {
-            setRole(userRole); // Set user role
-          }
-        } else {
-          console.log("No user data found in Firestore");
-        }
-      }).catch(error => {
-        console.error("Error getting user data:", error);
-      });
-    } else {
-      // User is signed out.
-      console.log("User signed out");
-    }
-  }
-
-  if (initializing) return null;
-
+const App = () => {
   return (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName={user ? 'Inside' : 'LoginScreen'}>
-            {user && role ? (
-                <Stack.Screen name="Inside" component={InsideLayout} options={{ headerShown: false }} />
-            ) : (
-                <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
-            )}
-        </Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="CommonStackScreen" component={CommonStackScreen} />
+        <Stack.Screen name="FacultyStackScreen" component={FacultyStackScreen} />
+        <Stack.Screen name="StudentStackScreen" component={StudentStackScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
-);
+  );
 }
+
+export default App;
