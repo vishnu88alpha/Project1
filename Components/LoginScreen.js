@@ -1,12 +1,11 @@
+// LoginScreen.js
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'; // Import the icons you need
 import { firebase } from '../FirebaseConfig';
 
-const LoginScreen = () => {
-    const navigation = useNavigation(); // Ensure that useNavigation is called unconditionally
+const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); // State to track password visibility
@@ -29,31 +28,37 @@ const LoginScreen = () => {
                         const userData = snapshot.docs[0].data();
                         const userRole = userData.role;
                         if (userRole === 'faculty') {
-                            navigation.replace('FacultyHome');
+                            navigation.replace('FacultyStackScreen');
                         } else if (userRole === 'student') {
-                            navigation.replace('HomeScreen');
+                            navigation.replace('StudentStackScreen');
                         } else {
-                            Alert.alert('Error', 'Invalid user role.');
+                            Alert.alert('No role found');
                         }
                     } else {
-                        Alert.alert('Error', 'User data not found.');
+                        Alert.alert('Invalid credentials');
                     }
                 })
                 .catch(error => {
-                    Alert.alert('Error', 'Error getting user data: ' + error.message);
-                })
-                .finally(() => {
-                    setLoading(false); // Set loading to false when login finishes
+                    Alert.alert('Error getting user data: ' + error.message);
+                    setLoading(false); // Set loading to false in case of error
                 });
         } catch (error) {
             setLoading(false); // Set loading to false in case of error
-            Alert.alert('Error', error.message);
+            Alert.alert(error.message);
         }
+    };
+
+    const handleLoginPress = () => {
+        if (!email || !password) {
+            Alert.alert('Please enter email and password');
+            return;
+        }
+        loginUser(email, password);
     };
 
     const forgotPassword = () => {
         if (!email) {
-            Alert.alert('Error', 'Please enter your email address to reset your password.');
+            Alert.alert('Please enter your email address to reset your password.');
             return;
         }
         firebase.auth().sendPasswordResetEmail(email)
@@ -103,7 +108,7 @@ const LoginScreen = () => {
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity
-                    onPress={() => loginUser(email, password)}
+                    onPress={handleLoginPress}
                     style={styles.button}
                     disabled={loading} // Disable button when loading
                 >
